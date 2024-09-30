@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'users/css/style.css' %}">
+</head>
+<body>
+    <section>
+        <div class="login">
+            <div class="logo">
+                <img src="{% static 'users/img/hello.png' %}" alt="Logotipo">
+            </div>
+            <form action="" id="registerForm">
+                {% csrf_token %}
+                <div class="input-area">
+                    <label for="username">Username</label>
+                    <input type="text" required name="" placeholder="Username" id="regUsername">
+                </div>
+                <div class="input-area">
+                    <label for="email">Email</label>
+                    <input type="email" required name="" placeholder="Email" id="email">
+                </div>
+                <div class="input-area">
+                    <label for="password">Password</label>
+                    <input type="password" required name="" placeholder="Password" id="regPassword">
+                </div>
+                <div class="input-area">
+                    <label for="password">Confirm Password</label>
+                    <input type="password" required name="" placeholder="Password" id="confirmPassword">
+                </div>
+                <input type="submit" value="Create Account">
+            </form>
+            <div class="new">
+                <a href="{% url 'index' %}" >Login</a>
+            </div>
+        </div>
+    </section>
+    <script src="{% static 'users/js/authRegister.js' %}"></script>
+</body>
+</html>

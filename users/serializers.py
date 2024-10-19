@@ -3,6 +3,15 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 from .models import Tarjeta, UsuarioTarjeta, EstadoEspacio, Espacio, UsuarioEspacio, Tablero, Estado, EstadoTarjeta, Subtarea 
 
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        # Campos que quieres exponer en la API
+        fields = ['id', 'username', 'email']
+
+
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
 
@@ -17,7 +26,6 @@ class RegisterSerializer(serializers.ModelSerializer):
             email=validated_data['email']
         )
         return user
-
 
 
 class TarjetaSerializer(serializers.ModelSerializer):
@@ -57,7 +65,7 @@ class EstadoSerializer(serializers.ModelSerializer):
         model = Estado
         fields = '__all__'
 
-class EstadoTrajetaSerializer(serializers.ModelSerializer):
+class EstadoTarjetaSerializer(serializers.ModelSerializer):
     class Meta:
         model = EstadoTarjeta
         fields = '__all__'

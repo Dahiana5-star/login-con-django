@@ -16,9 +16,33 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from . import views
 
+# Creamos el router
+router = DefaultRouter()
+
+# Registramos los ViewSets en el router
+router.register(r'users', UserViewSet)
+router.register(r'tarjetas', views.TarjetaViewSet)
+router.register(r'usuarioTarjetas', views.UsuarioTarjetaViewSet)
+router.register(r'estadoEspacios', views.EstadoEspacioViewSet)
+router.register(r'espacios', views.EspacioViewSet)
+router.register(r'usuarioEspacios', views.UsuarioEspacioViewSet)
+router.register(r'tableros', views.TableroViewSet)
+router.register(r'estados', views.EstadoViewSet)
+router.register(r'estadoTarjetas', views.EstadoTarjetaViewSet)
+router.register(r'subtareas', views.SubtareaViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/users/', include('users.urls')),  # Rutas de la app users
+    path('api/', include(router.urls)),
+
 ]
+
+
+
+
+
+

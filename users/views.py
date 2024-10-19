@@ -7,6 +7,8 @@ from django.contrib.auth import authenticate
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework_simplejwt.tokens import RefreshToken
+from .models import Tarjeta, UsuarioTarjeta, EstadoEspacio, Espacio, UsuarioEspacio, Tablero, Estado, EstadoTarjeta, Subtarea 
+
 
 # Create your views here.
 

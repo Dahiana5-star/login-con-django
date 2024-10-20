@@ -17,13 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from . import views
+from users import views
+
 
 # Creamos el router
 router = DefaultRouter()
 
 # Registramos los ViewSets en el router
-router.register(r'users', UserViewSet)
+router.register(r'users', views.UserViewSet)
 router.register(r'tarjetas', views.TarjetaViewSet)
 router.register(r'usuarioTarjetas', views.UsuarioTarjetaViewSet)
 router.register(r'estadoEspacios', views.EstadoEspacioViewSet)

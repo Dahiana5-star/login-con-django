@@ -12,6 +12,11 @@ from .serializers import RegisterSerializer, TarjetaSerializer, UsuarioTarjetaSe
 
 # Create your views here.
 
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
 # Vista de registro de usuarios
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -34,10 +39,8 @@ def workspaceView(request):
     return render(request, 'users/workspace.html')
 
 
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-    
+
+
 class TarjetaViewSet(viewsets.ModelViewSet):
     queryset = Tarjeta.objects.all()
     serializer_class = TarjetaSerializer

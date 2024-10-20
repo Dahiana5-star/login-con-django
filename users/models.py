@@ -2,22 +2,13 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# class Usuario(models.Model):
-#     correo = models.EmailField(unique=True)
-#     nombre_usuario = models.CharField(max_length=255)
-#     contrasena = models.CharField(max_length=255)
-#     foto_perfil = models.TextField(null=True, blank=True)
-#     fecha_nacimiento = models.DateField(null=True, blank=True)
-
-#     def __str__(self):
-#         return self.nombre_usuario
 
 class Tarjeta(models.Model):
-    nombre_actividad = models.CharField(max_length=255)
-    descripcion = models.TextField(null=True, blank=True)
+    nombre_actividad = models.CharField(max_length=100)
+    descripcion = models.TextField(null=False, blank=False)
     etiqueta = models.CharField(max_length=255, null=True, blank=True)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
-    fecha_vencimiento = models.DateTimeField(null=True, blank=True)
+    fecha_vencimiento = models.DateTimeField(null=False, blank=False)
     creador_tarjeta = models.ForeignKey(User, on_delete=models.CASCADE, related_name='creador_tarjeta')
 
     def __str__(self):

@@ -1,14 +1,15 @@
 from django.shortcuts import render
 from rest_framework import generics, viewsets
 from django.contrib.auth.models import User
+from rest_framework.authtoken.models import Token
 from rest_framework.permissions import AllowAny
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import Tarjeta, UsuarioTarjeta, EstadoEspacio, Espacio, UsuarioEspacio, Tablero, Estado, EstadoTarjeta, Subtarea 
 from .serializers import RegisterSerializer, TarjetaSerializer, UsuarioTarjetaSerializer, EstadoEspacioSerializer, EspacioSerializer, UsuarioEspacioSerializer, TableroSerializer, EstadoSerializer, EstadoTarjetaSerializer, SubtareaSerializer, UserSerializer
-
+from django.http import JsonResponse
 
 # Create your views here.
 
@@ -26,7 +27,23 @@ class RegisterView(generics.CreateAPIView):
 
 # Vista para mostrar el login
 def loginView(request):
-    return render(request, 'users/index.html') 
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        
+        if user is not None:
+            login(request, user)  # Esto crea la sesión
+        
+            # Genera o recupera el token de autenticación
+            token, created = Token.objects.get_or_create(user=user)
+            
+            # Devuelve tanto el token como el session_id
+            return JsonResponse({'message': 'Login exitoso', 'token': token.key, 'session_id': request.session.session_key})
+
+        else:
+            return JsonResponse({'error': 'Credenciales incorrectas'}, status=400)
+    return render(request, 'users/index.html')
 
 
 # Vista para la página de registro
@@ -38,6 +55,23 @@ def registroView(request):
 def workspaceView(request):
     return render(request, 'users/workspace.html')
 
+
+@api_view(['GET'])
+def getUser(request):
+    username = request.GET.get('username')  # Obtener el parámetro 'username' de la URL
+    if username:
+        try:
+            user = User.objects.get(username=username)
+            user_data = {
+                'id': user.id,
+                'username': user.username,
+                'email': user.email,
+                # Añade aquí cualquier otro campo que quieras devolver
+            }
+            return JsonResponse(user_data, safe=False)
+        except User.DoesNotExist:
+            return JsonResponse({'error': 'Usuario no encontrado'}, status=404)
+    return JsonResponse({'error': 'Parámetro username no proporcionado'}, status=400)
 
 
 

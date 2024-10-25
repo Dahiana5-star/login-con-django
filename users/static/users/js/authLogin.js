@@ -40,9 +40,11 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
   .then(data => {
     if (data.token) {
       console.log('Login successful, token:', data.token);
+      console.log('Login successful, session_id:', data.session_id);
 
       // Guarda el token en el localStorage o cookie para futuras peticiones
       localStorage.setItem('token', data.token);
+      localStorage.setItem('session_id', data.session_id); // Guarda el session ID
     
       // Redirigir al Workspace después del login exitoso
       window.location.href = '/api/users/workspace/';
@@ -56,3 +58,5 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     alert('Error al iniciar sesión. Verifica tus credenciales.');
   });
 });
+
+

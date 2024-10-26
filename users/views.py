@@ -92,8 +92,24 @@ class EspacioViewSet(viewsets.ModelViewSet):
     serializer_class = EspacioSerializer
 
 class UsuarioEspacioViewSet(viewsets.ModelViewSet):
-    queryset = UsuarioEspacio.objects.all()
     serializer_class = UsuarioEspacioSerializer
+    
+    def get_queryset(self):
+        # Obtiene el valor del parámetro de consulta 'espacio' en la URL, si está presente
+        espacio = self.request.query_params.get('espacio', None)
+        
+        # Filtra los resultados solo por el valor de espacio, si fue proporcionado
+        if espacio is not None:
+            queryset = UsuarioEspacio.objects.filter(espacio=espacio)
+        
+            if not queryset.exists():
+                # Retorna un mensaje de error si el espacio no existe
+                self.action = 'retrieve'  # Evita error por falta de método retrieve
+                raise ValueError(f"No se encontró el espacio con el nombre '{espacio}'.")
+            return queryset
+
+        # Si no se proporcionó el parámetro 'espacio', devuelve todos los objetos
+        return UsuarioEspacio.objects.all()
 
 class TableroViewSet(viewsets.ModelViewSet):
     queryset = Tablero.objects.all()

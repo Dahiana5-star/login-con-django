@@ -10,6 +10,7 @@ class Tarjeta(models.Model):
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     fecha_vencimiento = models.DateTimeField(null=False, blank=False)
     creador_tarjeta = models.ForeignKey(User, on_delete=models.CASCADE, related_name='creador_tarjeta')
+    asignado_a = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return self.nombre_actividad

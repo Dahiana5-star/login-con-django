@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'users', # añado la nueva app
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -50,7 +51,24 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+# URLs de redirección
+LOGIN_URL = 'index'
+LOGIN_REDIRECT_URL = 'workspace'
+LOGOUT_URL = 'logout'
+LOGOUT_REDIRECT_URL = 'index'
+
+# Credenciales de Google
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '202725350082-80015e22q0isl6515b7ggm7hq3r2omk7.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+
 
 ROOT_URLCONF = 'trello_clon.urls'
 

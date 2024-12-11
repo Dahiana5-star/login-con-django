@@ -24,8 +24,10 @@
                 </div>
                 <input type="submit" value="Login">
             </form>
+            
             <div class="new">
                 <a href="{% url 'registro' %}">Create Account</a>
+                <a href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a>
             </div>
         </div>
     </section>
